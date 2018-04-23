@@ -1,14 +1,20 @@
 version: "2.0"
 services:
-  frontend:
+  frontend_develop:
       build: .
-      image: "babequeue_frontend:${BRANCH_NAME}"
+      image: "babequeue_frontend:develop"
       ports: 
-        - "80:80"
+        - "8001:80"
       restart: always
-
+      volumes:
+        - "/etc/home/applications/babequeue/build /www/html/branches/develop"
+     
+      container_name: "babequeue_frontend_develop"
+ 
 networks:
   default:
     external:
       name: nginx-proxy
+
+
 

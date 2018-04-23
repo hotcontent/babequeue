@@ -1,9 +1,22 @@
-git fetch
+#!/bin/bash
 
-for branches in $(git for-each-ref --format='%(refname)' refs/remotes/)
-do
-  branch=${branches/refs\/remotes\/origin\//}
+if [ -n "$1" ]
+then
+  git fetch
 
-  export BRANCH_NAME=$branch
-  docker-compose up -d --build
-done
+  if [ "$(git branch --list $branch_name)" ]
+  then 
+    git checkout $1
+  else 
+    echo "Branch does not exist" && exit 1
+  fi
+
+  rm docker-compose.yml
+
+  export BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+  export FEATURE_PORT=8001
+
+  envsubst < "./docker-compose.template" > "./docker-compose.yml"
+else
+  echo "Specify branch name" && exit 1
+fi
