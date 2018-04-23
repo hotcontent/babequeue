@@ -1,0 +1,14 @@
+version: "2.0"
+services:
+  frontend:
+      build: .
+      image: "babequeue_frontend:${BRANCH_NAME}"
+      ports: 
+        - "80:80"
+      restart: always
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+
