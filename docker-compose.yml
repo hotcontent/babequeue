@@ -1,15 +1,15 @@
 version: "2.0"
 services:
-  frontend_develop:
+  frontend_master:
       build: .
-      image: "babequeue_frontend:develop"
+      image: "babequeue_frontend:master"
       ports: 
         - "8000:80"
       restart: always
       volumes:
-        - "/etc/home/applications/babequeue/build /www/html/branches/develop"
+        - "/etc/home/applications/babequeue/build /www/html/branches/master"
      
-      container_name: "babequeue_frontend_develop"
+      container_name: "babequeue_frontend_master"
  
 networks:
   default:
