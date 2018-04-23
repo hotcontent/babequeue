@@ -28,6 +28,7 @@ then
   envsubst < "./docker-compose.template.yml" > "./docker-compose.yml"
 
   docker-compose up -d --build
+  rm docker-compose.yml
 else
   echo "Specify branch name" && exit 1
 fi
