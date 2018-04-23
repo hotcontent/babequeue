@@ -4,7 +4,7 @@ if [ -n "$1" ]
 then
   git fetch
 
-  if [ "$(git branch --list $branch_name)" ]
+  if [ "$(git branch --list $1)" ]
   then 
     git checkout $1
   else 
@@ -13,10 +13,21 @@ then
 
   rm docker-compose.yml
 
-  export BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
-  export FEATURE_PORT=8001
+  BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+  FEATURE_PORT=8000 
 
-  envsubst < "./docker-compose.template" > "./docker-compose.yml"
+
+  if [ "$(docker ps | grep $FEATURE_PORT)" ]
+  then
+    FEATURE_PORT=$((FEATURE_PORT+1))
+  fi
+
+  export FEATURE_PORT=$FEATURE_PORT
+  export BRANCH_NAME=$BRANCH_NAME
+
+  envsubst < "./docker-compose.template.yml" > "./docker-compose.yml"
+
+  docker-compose up -d --build
 else
   echo "Specify branch name" && exit 1
 fi

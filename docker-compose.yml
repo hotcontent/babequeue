@@ -4,7 +4,7 @@ services:
       build: .
       image: "babequeue_frontend:develop"
       ports: 
-        - "8001:80"
+        - "8000:80"
       restart: always
       volumes:
         - "/etc/home/applications/babequeue/build /www/html/branches/develop"
