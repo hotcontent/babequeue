@@ -14,6 +14,12 @@ else
   git checkout -b $BRANCH_NAME $GIT_BRANCH
 fi
 
+if [ inotifywait -m -e modify ./deploy.sh ]
+then
+ ./deploy.sh
+ exit 1
+fi
+
 [ -e dokcer-compose.yml ] && rm docker-compose.yml
 
 FEATURE_PORT=8000 
