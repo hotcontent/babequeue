@@ -1,27 +1,32 @@
 #!/bin/bash
+git fetch
 
-if [ -n "$1" ]
+GIT_BRANCH="$(printenv GIT_BRANCH)"
+BRANCH_NAME="$(echo ${GIT_BRANCH//origin\//''})"
+
+echo ${BRANCH_NAME}
+
+if [ "$(git branch --list | grep $BRANCH_NAME)" ]
 then
-  git fetch
-
-  [ -e dokcer-compose.yml ] && rm docker-compose.yml
-
-  BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
-  FEATURE_PORT=8000 
-
-
-  if [ "$(docker ps | grep $FEATURE_PORT)" ]
-  then
-    FEATURE_PORT=$((FEATURE_PORT+1))
-  fi
-
-  export FEATURE_PORT=$FEATURE_PORT
-  export BRANCH_NAME=$BRANCH_NAME
-
-  envsubst < "./docker-compose.template.yml" > "./docker-compose.yml"
-
-  docker-compose up -d --build
-  rm docker-compose.yml
-else
-  echo "Specify branch name" && exit 1
+  git checkout $BRANCH_NAME
+  git pull
+else  
+  git checkout -b $BRANCH_NAME $GIT_BRANCH
 fi
+
+[ -e dokcer-compose.yml ] && rm docker-compose.yml
+
+FEATURE_PORT=8000 
+
+if [ "$(docker ps | grep $FEATURE_PORT)" ]
+then
+  FEATURE_PORT=$((FEATURE_PORT+1))
+fi
+
+export FEATURE_PORT=$FEATURE_PORT
+export BRANCH_NAME=$BRANCH_NAME
+
+envsubst < "./docker-compose.template.yml" > "./docker-compose.yml"
+
+docker-compose up -d --build
+rm docker-compose.yml
