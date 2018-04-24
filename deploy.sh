@@ -1,5 +1,4 @@
 #!/bin/bash
-git checkout $1
 git fetch
 
 GIT_BRANCH="$(echo $1)"
