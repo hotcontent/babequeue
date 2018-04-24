@@ -14,7 +14,7 @@ else
   git checkout -b $BRANCH_NAME $GIT_BRANCH
 fi
 
-if [ inotifywait -m -e modify ./deploy.sh ]
+if [ "$(inotifywait -m -e modify ./deploy.sh)" ]
 then
  ./deploy.sh
  exit 1
