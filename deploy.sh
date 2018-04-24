@@ -18,10 +18,10 @@ fi
 
 FEATURE_PORT=8000 
 
-if [ "$(docker ps | grep $FEATURE_PORT)" ]
-then
+while [ "$(docker ps | grep $FEATURE_PORT)" ]
+do
   FEATURE_PORT=$((FEATURE_PORT+1))
-fi
+done
 
 export FEATURE_PORT=$FEATURE_PORT
 export BRANCH_NAME=$BRANCH_NAME
