@@ -4,7 +4,7 @@ if [ -n "$1" ]
 then
   git fetch
 
-  if [ "$(git branch --list $1)" ]
+  if [ "$(git branch -r | grep $1)" ]
   then 
     git checkout $1
   else 
