@@ -1,7 +1,7 @@
 #!/bin/bash
 git fetch
 
-GIT_BRANCH="$(printenv GIT_BRANCH)"
+GIT_BRANCH="$(echo $1)"
 BRANCH_NAME="$(echo ${GIT_BRANCH//origin\//''})"
 
 echo ${BRANCH_NAME}
@@ -10,7 +10,7 @@ if [ "$(git branch --list | grep $BRANCH_NAME)" ]
 then
   git checkout $BRANCH_NAME
   git pull
-else  
+else
   git checkout -b $BRANCH_NAME $GIT_BRANCH
 fi
 
