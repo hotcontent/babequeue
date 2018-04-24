@@ -4,14 +4,7 @@ if [ -n "$1" ]
 then
   git fetch
 
-  if [ "$(git branch -r | grep $1)" ]
-  then 
-    git checkout $1
-  else 
-    echo "Branch does not exist" && exit 1
-  fi
-
-  rm docker-compose.yml
+  [ -e dokcer-compose.yml ] && rm docker-compose.yml
 
   BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
   FEATURE_PORT=8000 
