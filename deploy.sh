@@ -1,4 +1,6 @@
 #!/bin/bash
+git fetch
+
 GIT_BRANCH="$(echo $1)"
 BRANCH_NAME="$(echo ${GIT_BRANCH//origin\//''})"
 
