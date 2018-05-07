@@ -1,16 +1,9 @@
 #!/bin/bash
+
 GIT_BRANCH="$(echo $1)"
 BRANCH_NAME="$(echo ${GIT_BRANCH//origin\//''})"
 
 echo ${BRANCH_NAME}
-
-if [ "$(git branch --list | grep $BRANCH_NAME)" ]
-then
-  git checkout $BRANCH_NAME
-  git pull
-else
-  git checkout -b $BRANCH_NAME $GIT_BRANCH
-fi
 
 [ -e dokcer-compose.yml ] && rm docker-compose.yml
 
