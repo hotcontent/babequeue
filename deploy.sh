@@ -9,7 +9,7 @@ echo ${BRANCH_NAME}
 
 FEATURE_PORT=8000 
 
-while [ "$(docker ps | grep $FEATURE_PORT)" ]
+while [ "$(docker ps | grep -w $FEATURE_PORT)" ]
 do
   FEATURE_PORT=$((FEATURE_PORT+1))
 done
